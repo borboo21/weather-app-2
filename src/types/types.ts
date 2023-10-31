@@ -6,24 +6,24 @@ current:{
     humidity: THumidity;
     temp_c: TTemp;
     wind_mph: TWind;
-
-
 }
 forecast:{
     forecastday:{
-        0:{
-            date: TDate;
-            day:{
-                daily_chance_of_rain: TRain;
-                maxtemp_c: TTemp;
-                mintemp_c: TTemp;
-            }
-        }
+        [key:number]:IWeatherForecastDay
     }
 }
 }
 
-export interface IForecast {
+export interface IWeatherForecastDay {
+        date: TDate;
+        day:{
+            daily_chance_of_rain: TRain;
+            maxtemp_c: TTemp;
+            mintemp_c: TTemp;
+        }
+}
+
+export interface IForecasts {
     [key: string]: IForecastDay[];
 }
 export interface IForecastDay {
@@ -36,6 +36,7 @@ export interface IForecastDay {
     date: TDate;
     condition: TCondition;
 }
+
 export type TTemp = number;
 export type TWind = number;
 export type THumidity = number;
