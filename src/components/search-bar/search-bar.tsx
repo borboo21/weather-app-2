@@ -13,6 +13,7 @@ export function SearchBar() {
     const falseInputRef = useRef<HTMLDivElement | null>(null);
     const textStartRef = useRef<HTMLDivElement | null>(null);
     const textEndRef = useRef<HTMLDivElement | null>(null);
+    const timerRef = useRef<any>(null);
     const dispatch = useDispatch();
 
 
@@ -23,13 +24,18 @@ export function SearchBar() {
     },[value]);
 
     useEffect(() => {
-        ws.getForecastWeather(value,3).then((data) => {
-            if (data){
-                //@ts-ignore
-                dispatch(addForecastAC({place: value, forecasts:data}))
-            }
-        })
-    },[value])
+        if (value.length < 1) return;
+        if (timerRef) clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => {
+            //@ts-ignore
+            ws.getForecastWeather(value,3).then((data) => {
+                if (data){
+                    //@ts-ignore
+                    dispatch(addForecastAC({ place: value, forecasts:data }));
+                }
+            });
+        }, 1000);
+    },[value]);
 
     React.useEffect(() => {
         const onResize = () => {
@@ -47,8 +53,6 @@ export function SearchBar() {
         window.addEventListener('resize', onResize);
         return () => window.removeEventListener('resize', onResize);
     }, []);
-
-
 
     return(
         <Stack
