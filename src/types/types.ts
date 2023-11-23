@@ -1,25 +1,19 @@
-export interface iWeatherRest {
-current:{
-    condition:{
-        text: TCondition;
-    }
-    humidity: THumidity;
-    temp_c: TTemp;
-    wind_mph: TWind;
-}
-forecast:{
-    forecastday:{
-        [key:number]:IWeatherForecastDay
-    }
-}
+export interface IWeatherRest {
+    [key:number]:IWeatherForecastDay
 }
 
 export interface IWeatherForecastDay {
         date: TDate;
         day:{
+            avghumidity: THumidity;
+            avgtemp_c :TTemp;
             daily_chance_of_rain: TRain;
             maxtemp_c: TTemp;
             mintemp_c: TTemp;
+            maxwind_mph: TWind;
+        }
+        condition:{
+            text: TCondition
         }
 }
 
@@ -28,11 +22,11 @@ export interface IForecasts {
 }
 export interface IForecastDay {
     humidity: THumidity;
-    temp: TTemp;
     wind: TWind;
     rain: TRain;
     maxTemp: TTemp;
     minTemp: TTemp;
+    avgTemp: TTemp;
     date: TDate;
     condition: TCondition;
 }
