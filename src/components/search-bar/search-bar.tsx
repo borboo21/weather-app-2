@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Stack, TextField, Typography } from '@mui/material';
+import {CircularProgress, Stack, TextField, Typography} from '@mui/material';
 import theme from '../../theme';
 import {ws} from "../../data/api";
 import {useDispatch} from "react-redux";
@@ -10,6 +10,7 @@ export function SearchBar() {
     const [value, setValue] = useState("");
     const [width, setWidth] = useState(0);
     const [maxWidth, setMaxWidth] = useState(0);
+    const [isLoading,setLoading] = useState(false)
     const falseInputRef = useRef<HTMLDivElement | null>(null);
     const textStartRef = useRef<HTMLDivElement | null>(null);
     const textEndRef = useRef<HTMLDivElement | null>(null);
@@ -27,12 +28,15 @@ export function SearchBar() {
         if (value.length < 1) return;
         if (timerRef) clearTimeout(timerRef.current);
         timerRef.current = setTimeout(() => {
+            setLoading(true)
             //@ts-ignore
             ws.getForecastWeather(value,3).then((data) => {
                 if (data){
                     //@ts-ignore
                     dispatch(addForecastAC({ place: value, forecasts:data }));
                 }
+            }).finally(() =>{
+                setLoading(false)
             });
         }, 1000);
     },[value]);
@@ -58,6 +62,7 @@ export function SearchBar() {
         <Stack
             direction="row"
             sx={{
+                position:"relative",
                 justifyContent: "center",
                 fontWeight: "medium",
                 alignItems: "center",
@@ -108,6 +113,10 @@ export function SearchBar() {
                 }}>
                 {value}
             </Stack>
+            {isLoading ? <CircularProgress color="inherit" sx={{
+                position:"absolute",
+                right: theme.spacing(-6)
+            }} /> : <Stack/> }
         </Stack>
     )
 }

@@ -7,8 +7,6 @@ import {addForecastAC} from "../../store/reducers/forecasts-reducer/forecasts-re
 import {IAppState} from "../../store/type";
 
 export function ForecastWeather() {
-    const test = useSelector((state: IAppState) => state.forecasts)
-    console.log(test)
     return(
         <Stack>
 
