@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Stack, TextField, Typography } from '@mui/material';
 import theme from '../../theme';
+import {ws} from "../../data/api";
+import {useDispatch} from "react-redux";
+import {addForecastAC} from "../../store/reducers/forecasts-reducer/forecasts-reducer";
 
 export function SearchBar() {
 
@@ -10,11 +13,28 @@ export function SearchBar() {
     const falseInputRef = useRef<HTMLDivElement | null>(null);
     const textStartRef = useRef<HTMLDivElement | null>(null);
     const textEndRef = useRef<HTMLDivElement | null>(null);
+    const timerRef = useRef<any>(null);
+    const dispatch = useDispatch();
+
 
     useEffect(() => {
         const el = falseInputRef.current as HTMLElement;
         if (!el) return;
         setWidth(el.offsetWidth);
+    },[value]);
+
+    useEffect(() => {
+        if (value.length < 1) return;
+        if (timerRef) clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => {
+            //@ts-ignore
+            ws.getForecastWeather(value,3).then((data) => {
+                if (data){
+                    //@ts-ignore
+                    dispatch(addForecastAC({ place: value, forecasts:data }));
+                }
+            });
+        }, 1000);
     },[value]);
 
     React.useEffect(() => {
