@@ -10,7 +10,7 @@ export function SearchBar() {
     const [value, setValue] = useState("");
     const [width, setWidth] = useState(0);
     const [maxWidth, setMaxWidth] = useState(0);
-    const [isFetching,setFetching] = useState(false)
+    const [isLoading,setLoading] = useState(false)
     const falseInputRef = useRef<HTMLDivElement | null>(null);
     const textStartRef = useRef<HTMLDivElement | null>(null);
     const textEndRef = useRef<HTMLDivElement | null>(null);
@@ -26,18 +26,17 @@ export function SearchBar() {
 
     useEffect(() => {
         if (value.length < 1) return;
-        if (value.length > 0) {
-            setFetching(true)
-        }
         if (timerRef) clearTimeout(timerRef.current);
         timerRef.current = setTimeout(() => {
+            setLoading(true)
             //@ts-ignore
             ws.getForecastWeather(value,3).then((data) => {
                 if (data){
                     //@ts-ignore
                     dispatch(addForecastAC({ place: value, forecasts:data }));
-                    setFetching(false)
                 }
+            }).finally(() =>{
+                setLoading(false)
             });
         }, 1000);
     },[value]);
@@ -63,6 +62,7 @@ export function SearchBar() {
         <Stack
             direction="row"
             sx={{
+                position:"relative",
                 justifyContent: "center",
                 fontWeight: "medium",
                 alignItems: "center",
@@ -113,7 +113,10 @@ export function SearchBar() {
                 }}>
                 {value}
             </Stack>
-            {isFetching ? <CircularProgress color="inherit" /> : <Stack/> }
+            {isLoading ? <CircularProgress color="inherit" sx={{
+                position:"absolute",
+                right: theme.spacing(-6)
+            }} /> : <Stack/> }
         </Stack>
     )
 }
