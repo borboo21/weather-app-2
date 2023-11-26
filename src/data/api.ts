@@ -1,4 +1,4 @@
-import {IWeatherForecastDay, IWeatherRest, TCondition, TDate, THumidity, TRain, TTemp, TWind} from "../types/types";
+import { IWeatherForecastDayRest, IWeatherRest } from '../types/types';
 
 const API_KEY: string = '50472d0a2fmshc9020618fcdc05bp17f3a6jsnbdc0cde2c0e4';
 const URL_BASE: string = `https://weatherapi-com.p.rapidapi.com/forecast.json?`;
@@ -29,17 +29,15 @@ export class WeatherService {
         });
     }
 
-    _transformForecast(data: IWeatherRest, city:string) {
+    _transformForecast(data: IWeatherRest, city: string) {
         return {
-            //@ts-ignore
-        [city]:data.forecast.forecastday.map(item =>{
-            //@ts-ignore
+        [city]: data.forecast.forecastday.map(item =>{
             return this._transformForecastDay(item)
         })
 
         }
     }
-    _transformForecastDay(item:IWeatherForecastDay){
+    _transformForecastDay(item: IWeatherForecastDayRest){
         return{
             humidity: item.day.avghumidity,
             temp: item.day.avgtemp_c,

@@ -7,6 +7,8 @@
       "esnext"
     ],
     "allowJs": true,
+    "allowUnusedLabels": false,
+    "strictNullChecks": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -18,7 +20,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "pretty": true,
   },
   "include": [
     "src"
