@@ -41,14 +41,14 @@ export class WeatherService {
     }
     _transformForecastDay(item:IWeatherForecastDay){
         return{
+            date: item.date,
+            condition: item.day.condition.text,
             humidity: item.day.avghumidity,
-            temp: item.day.avgtemp_c,
-            wind: item.day.maxwind_mph,
-            rain: item.day.daily_chance_of_rain,
             maxTemp: item.day.maxtemp_c,
             minTemp: item.day.mintemp_c,
-            date: item.date,
-            condition: item.condition,
+            rain: item.day.daily_chance_of_rain,
+            temp: item.day.avgtemp_c,
+            wind: item.day.maxwind_mph,
         }
     }
 }

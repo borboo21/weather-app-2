@@ -1,16 +1,45 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Stack, TextField, Typography } from '@mui/material';
+import React from 'react';
+import {Card, CardContent, CardMedia, Container, Grid, Stack, Typography} from '@mui/material';
 import theme from '../../theme';
-import {ws} from "../../data/api";
-import {useDispatch, useSelector} from "react-redux";
-import {addForecastAC} from "../../store/reducers/forecasts-reducer/forecasts-reducer";
-import {IAppState} from "../../store/type";
+import {AcUnitOutlined} from "@mui/icons-material";
 
 export function ForecastWeather() {
+    const fwCards = [1,2,3,4]
     return(
-        <Stack>
-
-        </Stack>
+        <Container
+                   sx={{
+                    paddingTop: theme.spacing(2)
+                   }}>
+            <Grid container spacing={8}>
+                {fwCards.map((fwCard) => (
+                    <Grid item key = {fwCard}>
+                    <Card sx={{
+                        border:'none',
+                        boxShadow:'none',
+                    }}>
+                        <Stack sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            paddingTop:'8px'
+                        }}>
+                            <AcUnitOutlined/>
+                        </Stack>
+                        <CardContent>
+                            <Typography variant='h6'>
+                                16°C / 20°C
+                            </Typography>
+                            <Typography sx={{
+                                display:'flex',
+                                justifyContent:'center'
+                            }}>
+                                Mon
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                    </Grid>
+                ))}
+            </Grid>
+        </Container>
     )
 }
 
