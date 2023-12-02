@@ -1,8 +1,10 @@
 export interface IWeatherRest {
-    [key:number]:IWeatherForecastDay
+    forecast: {
+        forecastday: IWeatherForecastDayRest[];
+    }
 }
 
-export interface IWeatherForecastDay {
+export interface IWeatherForecastDayRest {
         date: TDate;
         day:{
             avghumidity: THumidity;

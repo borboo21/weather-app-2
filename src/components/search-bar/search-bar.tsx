@@ -11,10 +11,10 @@ export function SearchBar() {
     const [width, setWidth] = useState(0);
     const [maxWidth, setMaxWidth] = useState(0);
     const [isLoading,setLoading] = useState(false)
-    const falseInputRef = useRef<HTMLDivElement | null>(null);
-    const textStartRef = useRef<HTMLDivElement | null>(null);
-    const textEndRef = useRef<HTMLDivElement | null>(null);
-    const timerRef = useRef<any>(null);
+    const falseInputRef = useRef(null);
+    const textStartRef = useRef(null);
+    const textEndRef = useRef(null);
+    const timerRef = useRef(null);
     const dispatch = useDispatch();
 
 
@@ -29,10 +29,8 @@ export function SearchBar() {
         if (timerRef) clearTimeout(timerRef.current);
         timerRef.current = setTimeout(() => {
             setLoading(true)
-            //@ts-ignore
             ws.getForecastWeather(value,3).then((data) => {
                 if (data){
-                    //@ts-ignore
                     dispatch(addForecastAC({ place: value, forecasts:data }));
                 }
             }).finally(() =>{
