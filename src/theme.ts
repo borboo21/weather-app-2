@@ -1,10 +1,9 @@
-import { createTheme } from '@mui/material';
+import {createTheme, makeStyles} from '@mui/material';
 
 const colors = {
     gray:"#a19f9f",
     black:"#545454"
 }
-
 const theme = createTheme({
     palette:{
         primary: {

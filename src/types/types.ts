@@ -9,13 +9,13 @@ export interface IWeatherForecastDayRest {
         day:{
             avghumidity: THumidity;
             avgtemp_c :TTemp;
+            condition:{
+                text: TCondition
+            };
             daily_chance_of_rain: TRain;
             maxtemp_c: TTemp;
             mintemp_c: TTemp;
             maxwind_mph: TWind;
-        }
-        condition:{
-            text: TCondition
         }
 }
 
