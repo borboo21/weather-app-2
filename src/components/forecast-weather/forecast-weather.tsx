@@ -1,44 +1,55 @@
 import React from 'react';
-import {Card, CardContent, CardMedia, Container, Grid, Stack, Typography} from '@mui/material';
+import {Card, CardContent, CardMedia, Container, Stack, Typography} from '@mui/material';
 import theme from '../../theme';
 import {AcUnitOutlined} from "@mui/icons-material";
 
 export function ForecastWeather() {
-    const fwCards = [1,2,3,4]
+    const days = [1,2,3,4]
+//days.map(day =>
+  // <WeatherCard icon={day.icon}
+  //             tempMin={day.tempMin}
+  //             tempMax={day.tempMax}
+  //             dayNum={day.dayNum}/>)
+    const WeatherCard = () => {
+        return(
+        <Card sx={{
+            border:'none',
+            borderRadius:theme.spacing(2),
+            boxShadow:'none',
+            margin: theme.spacing(),
+        }}>
+            <Stack sx={{
+                alignItems: 'center',
+                padding: theme.spacing()
+            }}>
+                <AcUnitOutlined/>
+            </Stack>
+            <CardContent>
+                <Typography variant='h6'>
+                    16°C / 20°C
+                </Typography>
+                <Typography sx={{
+                    display:'flex',
+                    justifyContent:'center'
+                }}>
+                    Mon
+                </Typography>
+            </CardContent>
+        </Card>
+        )}
     return(
         <Container
                    sx={{
                     paddingTop: theme.spacing(2)
                    }}>
-            <Grid container spacing={8}>
-                {fwCards.map((fwCard) => (
-                    <Grid item key = {fwCard}>
-                    <Card sx={{
-                        border:'none',
-                        boxShadow:'none',
+            <Stack spacing={8}
+                    sx={{
+                        p:theme.spacing(),
+                        alignItems:'center',
+                        flexDirection:'row'
                     }}>
-                        <Stack sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            paddingTop:'8px'
-                        }}>
-                            <AcUnitOutlined/>
-                        </Stack>
-                        <CardContent>
-                            <Typography variant='h6'>
-                                16°C / 20°C
-                            </Typography>
-                            <Typography sx={{
-                                display:'flex',
-                                justifyContent:'center'
-                            }}>
-                                Mon
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                    </Grid>
-                ))}
-            </Grid>
+                <WeatherCard/>
+            </Stack>
         </Container>
     )
 }
